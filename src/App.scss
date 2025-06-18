@@ -1,3 +1,10 @@
+$input-field-height: 1.5rem;
+
+html, body{
+  padding: 0;
+  margin: 0;
+}
+
 .center {
   display: flex;
   align-items: center;
@@ -18,3 +25,36 @@
   width: 700px;
   border-radius: 1.25rem;
 }
+
+.combobox {
+  position: relative;
+}
+
+.input-field {
+ height: $input-field-height;
+}
+
+.listbox {
+  // display: none;
+  position: absolute;
+  top: calc($input-field-height / 2 + 1px);
+  left: 0;
+  width: 100%;
+  max-height: 240px;
+  overflow-y: scroll;
+  border: 1px solid black;
+  list-style: none;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.listbox > li {
+  cursor: pointer;
+  padding-left: 4px;
+  background-color: white;
+}
+
+.listbox > li:hover {
+  background-color: aqua;
+}
+
