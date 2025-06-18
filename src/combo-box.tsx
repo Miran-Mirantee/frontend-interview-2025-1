@@ -35,6 +35,7 @@ export const ComboBox = ({ data, onSelect }: ComboBoxProps) => {
       const active = document.activeElement;
       if (!comboBoxRef.current.contains(active)) {
         setIsOpenListbox(false);
+        setActiveIndex(-1);
       }
     }, 0);
   };
@@ -57,9 +58,11 @@ export const ComboBox = ({ data, onSelect }: ComboBoxProps) => {
     switch (e.code) {
       case "ArrowUp":
         setActiveIndex((prev) => Math.max(prev - 1, 0));
+        setIsOpenListbox(true);
         break;
       case "ArrowDown":
         setActiveIndex((prev) => Math.min(prev + 1, filteredData.length - 1));
+        setIsOpenListbox(true);
         break;
       case "Enter":
         if (activeIndex >= 0 && activeIndex < filteredData.length) {
@@ -71,7 +74,8 @@ export const ComboBox = ({ data, onSelect }: ComboBoxProps) => {
         inputFieldRef.current.focus();
         break;
       case "Escape":
-        inputFieldRef.current.blur();
+        setActiveIndex(-1);
+        setIsOpenListbox(false);
         break;
       default:
         setActiveIndex(-1);
