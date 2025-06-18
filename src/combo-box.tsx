@@ -62,10 +62,12 @@ export const ComboBox = ({ data, onSelect }: ComboBoxProps) => {
         setActiveIndex((prev) => Math.min(prev + 1, filteredData.length - 1));
         break;
       case "Enter":
-        const value = filteredData[activeIndex].value;
-        setInputValue(value);
-        setIsOpenListbox(false);
-        if (onSelect) onSelect(value);
+        if (activeIndex >= 0 && activeIndex < filteredData.length) {
+          const value = filteredData[activeIndex].value;
+          setInputValue(value);
+          setIsOpenListbox(false);
+          if (onSelect) onSelect(value);
+        }
         inputFieldRef.current.focus();
         break;
       case "Escape":
