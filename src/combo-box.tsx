@@ -1,24 +1,25 @@
 // Finish the code here.
 // Feel free to modify any of the code in this project, this is just a starting point if it's helpful.
-import { useRef, useEffect, useState, useId } from "react";
+import { useRef, useState, useId } from "react";
 import { DropdownDataList } from "./data";
-
-/**
- * TODO:
- * - add accessibilities
- * - last functionalities and behavior check
- * - set z-index of listbox
- */
 
 type ComboBoxProps = {
   data: DropdownDataList;
+  label: string;
+  ariaLabel?: string;
+  showLabel?: boolean;
   onSelect?: (value: string) => void;
 };
 
-export const ComboBox = ({ data, onSelect }: ComboBoxProps) => {
+export const ComboBox = ({
+  data,
+  label,
+  ariaLabel,
+  showLabel = true,
+  onSelect,
+}: ComboBoxProps) => {
   const comboBoxRef = useRef<HTMLDivElement>(null!);
   const inputFieldRef = useRef<HTMLInputElement>(null!);
-  const listboxRef = useRef<HTMLUListElement>(null!);
   const [inputValue, setInputValue] = useState<string>("");
   const [isOpenListbox, setIsOpenListbox] = useState<boolean>(false);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
@@ -102,6 +103,7 @@ export const ComboBox = ({ data, onSelect }: ComboBoxProps) => {
       onBlur={handleFocusOut}
       onKeyDown={handleKeyDown}
     >
+      {showLabel && <label htmlFor={`cb${comboboxId}-input`}>{label}</label>}
       <input
         ref={inputFieldRef}
         id={`cb${comboboxId}-input`}
@@ -118,10 +120,10 @@ export const ComboBox = ({ data, onSelect }: ComboBoxProps) => {
             : ""
         }
         aria-autocomplete="list"
+        aria-label={showLabel ? "" : ariaLabel ? ariaLabel : label}
       />
       {isOpenListbox && (
         <ul
-          // ref={listboxRef}
           id={`cb${comboboxId}-listbox`}
           className="listbox"
           tabIndex={-1}
@@ -143,7 +145,9 @@ export const ComboBox = ({ data, onSelect }: ComboBoxProps) => {
               </li>
             ))
           ) : (
-            <li>No results</li>
+            <li role="option" aria-disabled="true">
+              No results
+            </li>
           )}
         </ul>
       )}
