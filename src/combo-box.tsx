@@ -76,6 +76,7 @@ export const ComboBox = ({
         setIsOpenListbox(true);
         break;
       case "Enter":
+      case "NumpadEnter":
         if (activeIndex >= 0 && activeIndex < filteredData.length) {
           const value = filteredData[activeIndex].value;
           setInputValue(value);
