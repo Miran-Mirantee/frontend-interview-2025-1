@@ -77,12 +77,15 @@ export const ComboBox = ({
         break;
       case "Enter":
       case "NumpadEnter":
+        let value = "";
         if (activeIndex >= 0 && activeIndex < filteredData.length) {
-          const value = filteredData[activeIndex].value;
-          setInputValue(value);
-          setIsOpenListbox(false);
-          if (onSelect) onSelect(value);
+          value = filteredData[activeIndex].value;
+        } else {
+          value = inputValue;
         }
+        setInputValue(value);
+        setIsOpenListbox(false);
+        if (onSelect) onSelect(value);
         inputFieldRef.current.focus();
         break;
       case "Escape":
