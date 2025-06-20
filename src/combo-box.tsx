@@ -146,7 +146,7 @@ export const ComboBox = ({
               </li>
             ))
           ) : (
-            <li role="option" aria-disabled="true">
+            <li className="option-disabled" role="option" aria-disabled="true">
               No results
             </li>
           )}
