@@ -32,11 +32,10 @@ html, body{
 }
 
 .input-field {
- height: $input-field-height;
+  height: $input-field-height;
 }
 
 .listbox {
-  // display: none;
   position: absolute;
   top: calc($input-field-height / 2 + 1px);
   left: 0;
@@ -47,6 +46,7 @@ html, body{
   list-style: none;
   padding: 0;
   box-sizing: border-box;
+  z-index: 1;
 }
 
 .listbox > li {
@@ -58,8 +58,4 @@ html, body{
 .listbox > li:hover, .listbox > .highlight {
   background-color: aqua;
 }
-
-// .listbox > .highlight {
-//   background-color: red;
-// }
 
