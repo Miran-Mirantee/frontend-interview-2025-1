@@ -11,6 +11,7 @@ const App = () => {
       <div className="card">
         <div>{selectedValue}</div> {/* checking the selected value */}
         <ComboBox data={dropdownData2} onSelect={setSelectedValue} />
+        <ComboBox data={dropdownData2} onSelect={setSelectedValue} />
       </div>
     </div>
   );

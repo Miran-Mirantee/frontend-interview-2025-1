@@ -1,7 +1,14 @@
 // Finish the code here.
 // Feel free to modify any of the code in this project, this is just a starting point if it's helpful.
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useId } from "react";
 import { DropdownDataList } from "./data";
+
+/**
+ * TODO:
+ * - add accessibilities
+ * - last functionalities and behavior check
+ * - set z-index of listbox
+ */
 
 type ComboBoxProps = {
   data: DropdownDataList;
@@ -19,6 +26,9 @@ export const ComboBox = ({ data, onSelect }: ComboBoxProps) => {
   const filteredData = data.filter((option) =>
     option.label.toLowerCase().startsWith(inputValue.toLowerCase())
   );
+
+  // In case there are multiple combobox in the same page
+  const comboboxId = useId();
 
   const scrollIfActive = (el: HTMLLIElement | null, index: number) => {
     if (index === activeIndex && el) {
@@ -94,27 +104,40 @@ export const ComboBox = ({ data, onSelect }: ComboBoxProps) => {
     >
       <input
         ref={inputFieldRef}
+        id={`cb${comboboxId}-input`}
         className="input-field"
         type="text"
         value={inputValue}
         onChange={handleInputChange}
+        role="combobox"
+        aria-controls={`cb${comboboxId}-listbox`}
+        aria-expanded={isOpenListbox}
+        aria-activedescendant={
+          filteredData[activeIndex]
+            ? `cb${comboboxId}-option-${filteredData[activeIndex].value}`
+            : ""
+        }
+        aria-autocomplete="list"
       />
       {isOpenListbox && (
         <ul
           // ref={listboxRef}
+          id={`cb${comboboxId}-listbox`}
           className="listbox"
-          role="listbox"
           tabIndex={-1}
           onClick={handleClick}
+          role="listbox"
         >
           {filteredData.length ? (
             filteredData.map((option, index) => (
               <li
                 ref={(el) => scrollIfActive(el, index)}
-                key={option.value}
+                id={`cb${comboboxId}-option-${option.value}`}
+                key={`cb${comboboxId}-option-${option.value}`}
                 className={index === activeIndex ? "highlight" : ""}
-                role="option"
                 data-value={option.value}
+                role="option"
+                aria-selected={index === activeIndex ? true : false}
               >
                 {option.label}
               </li>
