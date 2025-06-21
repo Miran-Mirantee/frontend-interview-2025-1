@@ -86,7 +86,7 @@ export const ComboBox = ({
         setInputValue(value);
         setIsOpenListbox(false);
         if (onSelect) onSelect(value);
-        inputFieldRef.current.focus();
+        // inputFieldRef.current.focus(); // I already forgot why I need this
         break;
       case "Escape":
         setActiveIndex(-1);
@@ -108,24 +108,46 @@ export const ComboBox = ({
       onKeyDown={handleKeyDown}
     >
       {showLabel && <label htmlFor={`cb${comboboxId}-input`}>{label}</label>}
-      <input
-        ref={inputFieldRef}
-        id={`cb${comboboxId}-input`}
-        className="input-field"
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        role="combobox"
-        aria-controls={`cb${comboboxId}-listbox`}
-        aria-expanded={isOpenListbox}
-        aria-activedescendant={
-          filteredData[activeIndex]
-            ? `cb${comboboxId}-option-${filteredData[activeIndex].value}`
-            : ""
-        }
-        aria-autocomplete="list"
-        aria-label={showLabel ? "" : ariaLabel ? ariaLabel : label}
-      />
+      <div className="input-field-wrapper">
+        <input
+          ref={inputFieldRef}
+          id={`cb${comboboxId}-input`}
+          className="input-field"
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          role="combobox"
+          aria-controls={`cb${comboboxId}-listbox`}
+          aria-expanded={isOpenListbox}
+          aria-activedescendant={
+            filteredData[activeIndex]
+              ? `cb${comboboxId}-option-${filteredData[activeIndex].value}`
+              : ""
+          }
+          aria-autocomplete="list"
+          aria-label={showLabel ? "" : ariaLabel ? ariaLabel : label}
+        />
+        <button
+          id={`cb${comboboxId}-button`}
+          type="button"
+          tabIndex={-1}
+          aria-label={ariaLabel ? ariaLabel : label}
+          aria-controls={`cb${comboboxId}-listbox`}
+          aria-expanded={isOpenListbox}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="18px"
+            height="18px"
+          >
+            <path
+              fill="currentColor"
+              d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6z"
+            ></path>
+          </svg>
+        </button>
+      </div>
       {isOpenListbox && (
         <ul
           id={`cb${comboboxId}-listbox`}

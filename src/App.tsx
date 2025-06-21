@@ -16,12 +16,6 @@ const App = () => {
           ariaLabel="Select a fruit"
           onSelect={setSelectedValue}
         />
-        <ComboBox
-          data={dropdownData2}
-          label={"Select a fruit, but in another combobox"}
-          showLabel={false}
-          onSelect={setSelectedValue}
-        />
       </div>
     </div>
   );
