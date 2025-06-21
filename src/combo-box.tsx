@@ -155,6 +155,7 @@ export const ComboBox = ({
           tabIndex={-1}
           onClick={handleClick}
           role="listbox"
+          aria-label={ariaLabel ? ariaLabel : label}
         >
           {filteredData.length ? (
             filteredData.map((option, index) => (
